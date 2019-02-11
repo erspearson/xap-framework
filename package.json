@@ -1,34 +1,40 @@
 {
   "name": "xap-framework",
-  "version": "1.0.0",
   "description": "A framework for building xAP home automation applications on NodeJS",
-  "main": "dist/xap-framework.js",
-  "types": "dist/xap-framework.d.ts",
-  "keywords": [
-    "xAP home automation"
+  "author": "Edward Pearson",
+  "version": "0.9.1",
+  "license": "MIT",
+  "keywords": [ "xAP home automation", "TypeScript", "NodeJS" ],
+  "main": "lib/xap-framework.js",
+  "types": "lib/xap-framework.d.ts",
+  "files": [
+    "package.json",
+    "lib/xap-framework.js",
+    "lib/xap-framework.js.map",
+    "lib/xap-framework.d.ts",
+    "lib/xap-framework.d.ts.map",
+    "src/xap-framework.ts"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/erspearson/xap-framework.git"
+  },
   "scripts": {
     "build": "tsc -p .",
     "buildtests": "tsc -p test",
     "test": "node node_modules/mocha/bin/mocha --no-colors --bail ./test/mocha-test-*.js"
   },
-  "author": "Edward Pearson",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/erspearson/xap-framework.git"
-  },
-  "license": "ISC",
   "dependencies": {
     "crc": "^3.5.0",
-    "ipaddr.js": "^1.7.0"
+    "ipaddr.js": "^1.9.0"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/crc": "^3.4.0",
     "@types/mocha": "^5.2.5",
-    "@types/node": "^8.10.11",
+    "@types/node": "^8.10.39",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
-    "typescript": "^2.9.1"
+    "typescript": "^3.0.0"
   }
 }
