@@ -9,7 +9,7 @@ describe('xAP Framework object tests', function() {
   // MESSAGE BLOCKS
   ////////////////////////////////////////////////////////////////////////////////////////////////
 
-  context('Message block primatives', function() {
+  context('Message block primitives', function() {
 
     // Test construction of the simplest block
     it('should construct a one item block', function() {
@@ -265,7 +265,7 @@ describe('xAP Framework object tests', function() {
       result.interval.should.equal(60)
     })
 
-    it('a heartbeat can have addional "port" and "pid" items', function() {
+    it('a heartbeat can have additional "port" and "pid" items', function() {
       const hb = xAP.buildHeartbeat('alive', 'FF.1234:00', 'v.d.i', 120, 56001)
       hb.items.should.have.lengthOf(8)
       const result = xAP.parseHeartbeatItems(hb) as xAP.heartbeatItems
@@ -299,7 +299,7 @@ describe('xAP Framework object tests', function() {
       result.should.match(/FF\.[0123456789ABCDEF]{6}:0{2}/)
     })
 
-    it("should generate different UID's for differnt sources", function() {
+    it("should generate different UID's for different sources", function() {
       const uid1 = xAP.generateUID13('vendor.device.instance')
       const result = xAP.generateUID13('vendor.thing.instance')
       result.should.not.equal(uid1)
