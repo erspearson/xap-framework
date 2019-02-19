@@ -8,7 +8,7 @@ describe('xAP Framework network tests', function() {
   let heartbeat: xAP.heartbeatItems | undefined
   let UID: string = ''
 
-  before('create netwoork object', function() {
+  before('create network object', function() {
 
     options = {
       source: {
