@@ -5,46 +5,93 @@ A framework for building xAP home automation applications on NodeJS
 and message processing for applications that communicate using the xAP home automation protocol.  
 Its purpose and operation are similar to the earlier xAPframework.net library written in CSharp.
 
-## Framework Overview
-Major functional areas are:
-* Network Communication - event-based interaction with UDP network sockets
-* Header Parsing and Construction - checking and manipulation of xAP message headers and heartbeats
-* Message Parsing and Construction - extracting and inserting values into xAP messages.
+## Installation
+```shell
+> npm install xap-framework
+```
 
-This TypeScript implementation includes a thorough treatment of xAP messages expressed through
-type definitions. xAP messages are defined from low- to high-level types as follows:
-* blockItem - each line in a xAP message (each a name-value pair)
-* block - a named set of message lines
-* headerItems - the lines required for the first block in every message
-* heartbeatItems - the lines required for heartbeat message headers
-* message - an array of blocks with the first being a header.
+## Usage
+
+```typescript
+// TypeScript
+import { xAP } from 'xap-framework'
+```
+```javascript
+// JavaScript
+var xAP = require('xap-framework')
+```
+
+## Framework Overview
+The main functional areas are:
+* **Network Communication** - event-based interaction with UDP network sockets
+* **Header Parsing and Construction** - checking and manipulation of xAP message headers and heartbeats
+* **Message Parsing and Construction** - extracting and inserting values into xAP messages.
+
+This TypeScript implementation includes a thorough treatment of xAP messages expressed throughtype definitions.  
+xAP messages are defined from low- to high-level types as follows:
+* `xAP.blockItem` - each line in a xAP message (each a name-value pair)
+* `xAP.block` - a named set of message lines
+* `xAP.headerItems` - the lines required for the first block in every message
+* `xAP.heartbeatItems` - the lines required for heartbeat message headers
+* `xAP.message` - an array of blocks with the first being a header.
 
 The various types and classes help deal with aspects of the xAP specification such as:
-* case-insensitivity of item and block names
-* items containing hex data
-* generating UID's from source addresses
-* the structure of source and target addresses and UID's
-* enforcing required and optional items in headers and heartbeats, their order and contents
-* translating between xAP's on-the-wire message format and JavaScript-friendly representations.
+* **case-insensitivity** of item and block names
+* items containing **hex data**
+* **generating UID's** from source addresses
+* the structure of **source and target addresses** as well as UID's
+* enforcing required and optional items in **headers and heartbeats**, their order and contents
+* translating between xAP's **on-the-wire** message format and JavaScript-friendly representations.
 
 
-Network communication is event-based, extending the NodeJS EventEmitter object.
-The `networkConnection` class raises events for:
-* connected - connection to the network confirmed by reception of a heartbeat
-* disconnected - confirmation of disconnection
-* connection-lost - heartbeat reception no longer detected
-* message - a xAP message has been received
-* heartbeat - a xAP heartbeat message has been received
-* error - a message has been received that is not well-formed xAP.
+Network communication is event-based, extending the NodeJS EventEmitter object.  
+The `xAP.networkConnection` class raises events:
+* `connected` - connection to the network confirmed by reception of a heartbeat
+* `disconnected` - confirmation of disconnection
+* `connection-lost` - heartbeat reception no longer detected
+* `message` - a xAP message has been received
+* `heartbeat` - a xAP heartbeat message has been received
+* `error` - a message has been received that is not well-formed xAP.
 
-The `networkConnection` class provides methods for:
+As well as events, the networkConnection class provides methods for:
 * connecting and disconnecting the network
 * sending messages.
 
-The `networkConnection` class represents a xAP device on the the network.
-Constructing an instance of `networkConnection` includes specifying at least the xAP Source of the device
+The networkConnection class represents a **xAP device** on the the network.
+Constructing an instance of networkConnection includes specifying at least the xAP Source of the device
 and optionally its UID, heartbeat interval and protocol version.
-Once connected, `networkConnection` will send out regular heartbeat messages,
-monitor the network and assist with filling out the header fields of messages to be sent.
+Once connected, networkConnection will send out regular heartbeat messages,
+monitor the network, raise events for incoming messages
+and assist with filling out the header fields of messages being sent.
 
+## Quick Example
+Say hello then log heartbeat messages
 
+```typescript
+import { xAP } from 'xap-framework'
+
+const options = {
+  source: {
+    vendor: 'acme',
+    device: 'logger',
+    instance: 'example'
+  },
+  hbInterval: 60
+}
+
+let xap = new xAP.networkConnection(options)
+
+xap.on('connected', () => {
+  console.log('Connected')
+  xap.sendBlock('message', new xAP.block('test.block', { content: 'Hello World!' } ))
+
+})
+
+xap.on('heartbeat', (hb, remote) => {
+  let heartbeat = xAP.parseHeartbeatItems(hb)
+  console.log(`Received ${heartbeat.class} from ${heartbeat.source}`)
+  }
+)
+
+xap.connect()
+```
