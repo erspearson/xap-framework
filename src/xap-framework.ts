@@ -312,8 +312,8 @@ export module xAP {
   }
 
   // Populate and validate a header items object from a a message block
-  // Mandtory header items shared by message headers and heartbeat headers
-  // Return undefined if valdation fails
+  // Mandatory header items shared by message headers and heartbeat headers
+  // Return undefined if validation fails
   function parseRequiredHeaderItems (block: block) : headerRequiredItems | undefined {
 
     let header = {} as headerRequiredItems
@@ -383,7 +383,7 @@ export module xAP {
   }
 
   // Populate and validate a heartbeat items object from a a message block
-  // Return undefined if valdation fails
+  // Return undefined if validation fails
   export function parseHeartbeatItems (block: block) : heartbeatItems | undefined {
 
     // extract the required header items
