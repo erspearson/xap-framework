@@ -11,7 +11,6 @@ Its purpose and operation are similar to the earlier xAPframework.net library wr
 ```
 
 ## Usage
-
 ```typescript
 // TypeScript
 import { xAP } from 'xap-framework'
@@ -84,14 +83,14 @@ let xap = new xAP.networkConnection(options)
 xap.on('connected', () => {
   console.log('Connected')
   xap.sendBlock('message', new xAP.block('test.block', { content: 'Hello World!' } ))
-
 })
 
 xap.on('heartbeat', (hb, remote) => {
   let heartbeat = xAP.parseHeartbeatItems(hb)
-  console.log(`Received ${heartbeat.class} from ${heartbeat.source}`)
+  if(heartbeat) {
+    console.log(`Received ${heartbeat.class} from ${heartbeat.source}`)
   }
-)
+})
 
 xap.connect()
 ```
