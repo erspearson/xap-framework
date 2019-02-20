@@ -628,7 +628,7 @@ export module xAP {
             blocks.slice(2).forEach((b) => { msg.add(b) })
             // retain the original received text
             msg.originalText = rawMsg.toString()
-            if(isDebug){ debug(`  mesaage from ${msg.source}, class ${msg.class}`) }
+            if(isDebug){ debug(`  message from ${msg.source}, class ${msg.class}`) }
             // call the message received callback
             this.emit('message', msg, remote)
           }
@@ -639,7 +639,7 @@ export module xAP {
           }
         }
         else {
-          debug('  faled to parse received data')
+          debug('  failed to parse received data')
           this.emit('error',rawMsg, remote)
         }
       })
