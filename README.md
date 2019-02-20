@@ -70,7 +70,7 @@ Connect, say hello then log heartbeat messages
 import { xAP } from 'xap-framework'
 
 // Specify the source address and heartbeat interval for our device
-const options = {
+const options: xAP.options = {
   source: {
     vendor: 'acme',
     device: 'logger',
@@ -79,13 +79,19 @@ const options = {
   hbInterval: 60
 }
 
+// Create the network connection
 let xap = new xAP.networkConnection(options)
 
+// Set an action on connect - send a test message
 xap.on('connected', () => {
   console.log('Connected')
-  xap.sendBlock('message', new xAP.block('test.block', { content: 'Hello World!' } ))
+  // Build a block named test.block
+  let myBlock = new xAP.block('test.block', { content: 'Hello World!' })
+  // Send the block from our device with class test.message
+  xap.sendBlock('test.message', myBlock)
 })
 
+// Set an action on heartbeat reception - log the class and source
 xap.on('heartbeat', (hb, remote) => {
   let heartbeat = xAP.parseHeartbeatItems(hb)
   if(heartbeat) {
@@ -93,15 +99,23 @@ xap.on('heartbeat', (hb, remote) => {
   }
 })
 
+// Start up the connection
 xap.connect()
 ```
-By default, networkConnection is configured to communicate with [xap-hub](http://github/erspearson/xap-hub)
+By default, networkConnection is configured to communicate with
+[xap-hub](http://github/erspearson/xap-hub)
 using only localhost sockets. The example above assumes this.
 xap-hub includes enhanced (compared with previous xAP hubs) communication with client applications
 by dealing with traffic in both directions via local ports.
 Previous hubs have only dealt with inbound traffic.
 
-To work with an earlier hub specify the outgoing network broadcast address in the options parameter
-to the constructor `address: '192.168.1.255'`.
-This is possible since xap-hub Both reception and transmission of messages is done via 
-that supports
+To work with an earlier hub specify the outgoing network broadcast address in the options hash  
+e.g., `txAddress: '192.168.1.255'`.  
+To work without any hub (as the only xAP application on a host),
+specify additionally the the receive address to bind to  
+e.g., `rxAddress: '192.168.1.10'`.
+
+The add-on module
+[xap-net-address](http://github.com/erspearson/xap-net-address)
+provides methods to determine the most likely network
+and broadcast addresses to use for txAddress and rxAddress.
