@@ -459,7 +459,8 @@ export module xAP {
     }
     hbInterval?: number
     uid?: string
-    address?: string
+    rxAddress?: string
+    txAddress?: string
     port?: number
     loopback?: boolean
   }
@@ -474,7 +475,8 @@ export module xAP {
     sourceString: string
     hbInterval: number
     uid: string
-    address: string
+    rxAddress: string
+    txAddress: string
     port: number
     loopback: boolean
   }
@@ -502,7 +504,8 @@ export module xAP {
       sourceString: 'vendor.device.instance',
       hbInterval: 60,
       uid: 'FF123400',
-      address: '127.0.0.1',
+      rxAddress: '127.0.0.1',
+      txAddress: '127.0.0.1',
       port: 3639,
       loopback: false
     }
@@ -513,7 +516,8 @@ export module xAP {
       sourceString: 'vendor.device.instance',
       hbInterval: 60,
       uid: 'FF.12345678:0000',
-      address: '127.0.0.1',
+      rxAddress: '127.0.0.1',
+      txAddress: '127.0.0.1',
       port: 3639,
       loopback: false
     }
@@ -544,7 +548,8 @@ export module xAP {
       const { vendor, device, instance } = this.options.source
       this.options.sourceString = `${vendor}.${device}.${instance}`
 
-      if(opts.address && ipaddr.isValid(opts.address)) { this.options.address = opts.address }
+      if(opts.rxAddress && ipaddr.isValid(opts.rxAddress)) { this.options.rxAddress = opts.rxAddress }
+      if(opts.txAddress && ipaddr.isValid(opts.txAddress)) { this.options.txAddress = opts.txAddress }
       if(opts.port) { this.options.port = opts.port }
       if(opts.loopback) { this.options.loopback = opts.loopback }
       if(opts.uid) { this.options.uid = opts.uid } else { this.options.uid = generateUID(this.options.version, this.options.sourceString) }
@@ -567,7 +572,7 @@ export module xAP {
             self.hbLastTime += 1000
             if(self.hbLastTime >= self.hbInterval) {
               self.hbLastTime = 0
-              if(!self.alive) { self.hbInterval = Math.floor(self.hbInterval * 1.0)} // increase factor > 1 to backoff timing
+              if(!self.alive) { self.hbInterval = Math.floor(self.hbInterval * 1.0)} // increase factor > 1 to back off timing
               if(self.hbInterval > self.options.hbInterval * 1000) { self.hbInterval = self.options.hbInterval * 1000 }
               self.sendHeartbeat()
               debug(`next heartbeat in ${self.hbInterval}ms`)
@@ -644,7 +649,7 @@ export module xAP {
         }
       })
       
-      this.rxSock.bind(0, this.options.address) // start to receive messages
+      this.rxSock.bind(0, this.options.rxAddress) // start to receive messages
     }
 
 
@@ -669,7 +674,7 @@ export module xAP {
     send (msg: string): Promise<void> {
       if(this.connected) {
         let buf = Buffer.from(msg, 'utf8')
-        return dgramSendAsync(this.txSock, buf, 0, buf.length, this.options.port, this.options.address)
+        return dgramSendAsync(this.txSock, buf, 0, buf.length, this.options.port, this.options.txAddress)
       } else {
         return Promise.reject('not connected')
       }
@@ -707,7 +712,7 @@ export module xAP {
       this.hbSentUID = uid
       this.hbReceived = false
 
-      if(isDebug){ debug(`send heartbeat to ${this.options.address}:${this.options.port} "${hb.toString().replace(/\n/g,'\\n')}"`)}
+      if(isDebug){ debug(`send heartbeat to ${this.options.txAddress}:${this.options.port} "${hb.toString().replace(/\n/g,'\\n')}"`)}
       return this.send(hb.toString())
     }
     
