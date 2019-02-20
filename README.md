@@ -64,11 +64,12 @@ monitor the network, raise events for incoming messages
 and assist with filling out the header fields of messages being sent.
 
 ## Quick Example
-Say hello then log heartbeat messages
+Connect, say hello then log heartbeat messages
 
 ```typescript
 import { xAP } from 'xap-framework'
 
+// Specify the source address and heartbeat interval for our device
 const options = {
   source: {
     vendor: 'acme',
@@ -94,3 +95,13 @@ xap.on('heartbeat', (hb, remote) => {
 
 xap.connect()
 ```
+By default, networkConnection is configured to communicate with [xap-hub](http://github/erspearson/xap-hub)
+using only localhost sockets. The example above assumes this.
+xap-hub includes enhanced (compared with previous xAP hubs) communication with client applications
+by dealing with traffic in both directions via local ports.
+Previous hubs have only dealt with inbound traffic.
+
+To work with an earlier hub specify the outgoing network broadcast address in the options parameter
+to the constructor `address: '192.168.1.255'`.
+This is possible since xap-hub Both reception and transmission of messages is done via 
+that supports
