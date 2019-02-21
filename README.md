@@ -102,8 +102,11 @@ xap.on('heartbeat', (hb, remote) => {
 // Start up the connection
 xap.connect()
 ```
+A more developed version this example is the
+xAP command line logging tool [xap-log](http://github.com/erspearson/xap-log).
+
 By default, networkConnection is configured to communicate with
-[xap-hub](http://github/erspearson/xap-hub)
+[xap-hub](http://github.com/erspearson/xap-hub)
 using only localhost sockets. The example above assumes this.
 xap-hub includes enhanced (compared with previous xAP hubs) communication with client applications
 by dealing with traffic in both directions via local ports.
@@ -119,3 +122,7 @@ The add-on module
 [xap-net-address](http://github.com/erspearson/xap-net-address)
 provides methods to determine the most likely network
 and broadcast addresses to use for txAddress and rxAddress.
+xap-hub uses xap-net-address to determine addresses.
+
+Part of a family of modules for xAP
+![xAP family diagram](/img/xap-family-framework.png)
