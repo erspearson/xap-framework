@@ -487,7 +487,7 @@ export module xAP {
     on (event: 'disconnected', listener: () => void) : this
     on (event: 'connection-lost', listener: () => void) : this
     on (event: 'message', listener: (msg: message, remote: dgram.RemoteInfo) => void) : this
-    on (event: 'heartbeat', listener: (hb: heartbeatBlock, remote: dgram.RemoteInfo) => void) : this
+    on (event: 'heartbeat', listener: (hb: heartbeatItems, remote: dgram.RemoteInfo) => void) : this
     on (event: 'error', listener: (buf: Buffer, remote: dgram.RemoteInfo) => void) : this
 
     connect(): void
@@ -622,7 +622,7 @@ export module xAP {
               }
   
               // raise the heartbeat event
-              this.emit('heartbeat', blocks[0], remote)
+              this.emit('heartbeat', hbi, remote)
             }
           }
   
