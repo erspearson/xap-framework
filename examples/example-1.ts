@@ -8,8 +8,8 @@ const options: xAP.options = {
     instance: 'example'
   },
   hbInterval: 60,
-  //rxAddress: '192.168.1.10',
-  //txAddress: '192.168.1.255'
+  //txAddress: '192.168.1.255' // edit & uncomment for non-enhanced hub
+  //rxAddress: '192.168.1.10', // edit & uncomment for no hub
 }
 
 // Create the network connection
@@ -24,12 +24,14 @@ xap.on('connected', () => {
   xap.sendBlock('test.message', myBlock)
 })
 
-// Set an action on heartbeat reception - log the class and source
-xap.on('heartbeat', (hb, remote) => {
-  let heartbeat = xAP.parseHeartbeatItems(hb)
-  if(heartbeat) {
-    console.log(`Received ${heartbeat.class} from ${heartbeat.source}`)
-  }
+// Set an action on message reception - log the class, source and block count
+xap.on('message', (message, remote) => {
+  console.log(`Received ${message.class} from ${message.source} with ${message.blocks.length} blocks`)
+})
+
+// Set an action on heartbeat reception - log source
+xap.on('heartbeat', (heartbeat, remote) => {
+  console.log(`Received heartbeat from ${heartbeat.source}`)
 })
 
 // Start up the connection

@@ -19,11 +19,8 @@ describe('xAP Framework network tests', function() {
       hbInterval: 60,
       loopback: true
     }
-console.error('stderr')
-console.log('stdout')
     xap = new xAP.networkConnection(options)
-
-    xap.on('heartbeat', (hb, remote) => { heartbeat = xAP.parseHeartbeatItems(hb) })
+    xap.on('heartbeat', (hb, remote) => { heartbeat = hb })
   })
 
   specify('connect to network', function(done) {

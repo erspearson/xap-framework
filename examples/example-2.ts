@@ -72,6 +72,7 @@ demoMessage.add(new xAP.block('another.block', { more: 'stuff', even: 'more'}))
 
 // The xAP.message.blocks property contains all the message blocks including the header
 console.log(`It now contains ${demoMessage.blocks.length} blocks`) // 3
+console.log(demoMessage.toString())
 
 // There's a utility function to get values from a numbered block
 let v = demoMessage.getBlockValue(1, 'numVal') // 2001

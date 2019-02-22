@@ -66,7 +66,7 @@ and assist with filling out the header fields of messages being sent.
 Look in the xap-framework examples folder (on the GitHub repository) for more guidance.
 
 ## Quick Example
-Connect, say hello then log heartbeat messages
+Connect, say hello then log messages
 
 ```typescript
 import { xAP } from 'xap-framework'
@@ -93,12 +93,9 @@ xap.on('connected', () => {
   xap.sendBlock('test.message', myBlock)
 })
 
-// Set an action on heartbeat reception - log the class and source
-xap.on('heartbeat', (hb, remote) => {
-  let heartbeat = xAP.parseHeartbeatItems(hb)
-  if(heartbeat) {
-    console.log(`Received ${heartbeat.class} from ${heartbeat.source}`)
-  }
+// Set an action on message reception - log the class and source
+xap.on('message', (message, remote) => {
+  console.log(`Received ${message.class} from ${message.source}`)
 })
 
 // Start up the connection
