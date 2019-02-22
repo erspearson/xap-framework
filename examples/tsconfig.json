@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "composite": false,
+        "declaration": false,
+        "declarationMap": false,
+        "sourceMap": true,
+        "moduleResolution": "node",
+        "strict": true
+    }
+}
