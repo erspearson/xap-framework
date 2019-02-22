@@ -2,6 +2,7 @@
 lib/
 *.map
 test/*.js
+examples/*.js
 
 # Logs
 logs

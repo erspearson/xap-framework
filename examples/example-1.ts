@@ -38,3 +38,6 @@ xap.connect()
 // There is no more code here but NodeJS will continue to run
 // as our networkConnection object is bound to a socket.
 // Terminate using ctrl-C.
+
+// For examples of how to create and manipulate xAP messages
+// see example-2.ts

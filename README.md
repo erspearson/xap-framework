@@ -63,6 +63,8 @@ Once connected, networkConnection will send out regular heartbeat messages,
 monitor the network, raise events for incoming messages
 and assist with filling out the header fields of messages being sent.
 
+Look in the xap-framework examples folder (on the GitHub repository) for more guidance.
+
 ## Quick Example
 Connect, say hello then log heartbeat messages
 
@@ -124,5 +126,5 @@ provides methods to determine the most likely network
 and broadcast addresses to use for txAddress and rxAddress.
 xap-hub uses xap-net-address to determine addresses.
 
-Part of a family of modules for xAP
-![xAP family diagram](/img/xap-family-framework.png)
+xap-framework is part of a family of modules for xAP
+![xAP family diagram](/img/xap-family-framework.png?raw=true)
