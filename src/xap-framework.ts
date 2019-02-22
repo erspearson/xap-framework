@@ -12,6 +12,7 @@ import { EventEmitter } from 'events';
 
 export module xAP {
 
+  // Define environment variable DEBUG to enable some console logging
   var debug = (...args:any) => {}
   var isDebug = false
   if(process.env.DEBUG && process.env.DEBUG.includes('xap')) { debug = console.log; isDebug = true }
@@ -34,7 +35,7 @@ export module xAP {
   export class block implements block {
 
     constructor(name: string, content: {[index:string]: string | number }) {
-      let n = 0;
+      if(!name) { throw Error('attempt to create xAP block with no name')}
       this.name = name
       this.items = []
       Object.keys(content).forEach(
