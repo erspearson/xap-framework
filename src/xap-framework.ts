@@ -171,8 +171,9 @@ export module xAP {
       return str
     }
 
-    get source(): string | undefined { return this.getHeaderValue('source') }
-    get class(): string | undefined { return this.getHeaderValue('class') }
+    // Convenience properties to promote header class and source to message level
+    get source(): string { return this.header.source }
+    get class(): string  { return this.header.class }
 
     getBlockValue (blockIndex: number, itemKey: string) : string | undefined { return this.blocks[blockIndex].getValue(itemKey) }
     getHeaderValue (itemKey: string) : string | undefined { return this.getBlockValue(0, itemKey) }
