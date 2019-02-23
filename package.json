@@ -2,7 +2,7 @@
   "name": "xap-framework",
   "description": "A framework for building xAP home automation applications on NodeJS",
   "author": "Edward Pearson",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "license": "MIT",
   "keywords": [ "xAP home automation", "TypeScript", "NodeJS" ],
   "main": "lib/xap-framework.js",
