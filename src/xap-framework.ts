@@ -358,7 +358,7 @@ export module xAP {
   }
 
   // Populate and validate a header items object from a a message block
-  // Return undefined if valdation fails
+  // Return undefined if validation fails
   export function parseHeaderItems (block: block) : headerItems | undefined {
 
     // extract the required header items
