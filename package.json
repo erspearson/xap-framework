@@ -20,6 +20,7 @@
     "url": "https://github.com/erspearson/xap-framework.git"
   },
   "scripts": {
+    "prepublishOnly": "tsc -p .",
     "build": "tsc -p .",
     "buildtests": "tsc -p test",
     "test": "node node_modules/mocha/bin/mocha --no-colors --bail ./test/mocha-test-*.js"
