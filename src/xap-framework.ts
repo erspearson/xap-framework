@@ -704,7 +704,7 @@ export module xAP {
         // connection lost, revert to rapid heartbeats
         this.hbInterval = 1000
         debug('connection lost: alive => false')
-        this.emit('lost-connection')
+        this.emit('connection-lost')
       }
 
       // update the alive flag confirming that our last heartbeat was sent and received
