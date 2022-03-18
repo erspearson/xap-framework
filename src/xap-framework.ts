@@ -13,7 +13,7 @@ import { EventEmitter } from 'events';
 export module xAP {
 
   // Define environment variable DEBUG to enable some console logging
-  var debug = (...args:any) => {}
+  var debug = (...args:any[]) => {}
   var isDebug = false
   if(process.env.DEBUG && process.env.DEBUG.includes('xap')) { debug = console.log; isDebug = true }
 
